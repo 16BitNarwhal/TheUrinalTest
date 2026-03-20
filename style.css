@@ -1,0 +1,1135 @@
+/* ============================================================
+   THE URINAL TEST — style.css
+   Top-down bathroom urinal etiquette game
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;600;700&family=Share+Tech+Mono&display=swap');
+
+/* ============================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================ */
+:root {
+  --bg-dark:        #0f1117;
+  --bg-surface:     #1a1d27;
+  --bg-card:        #1f2333;
+  --bg-card-hover:  #252a3a;
+
+  --accent-blue:    #4a9eff;
+  --accent-lime:    #7fff00;
+  --accent-green:   #2ecc71;
+  --accent-yellow:  #f1c40f;
+  --accent-orange:  #e67e22;
+  --accent-red:     #e74c3c;
+  --accent-gold:    #ffd700;
+
+  --urinal-body:    #f5f0e8;
+  --urinal-border:  #cccccc;
+  --urinal-bowl:    #d8cfc0;
+  --urinal-drain:   #b0a898;
+
+  --text-primary:   #f0f0f0;
+  --text-secondary: #8892a4;
+  --text-muted:     #555f72;
+
+  --tile-light:     rgba(255, 255, 255, 0.04);
+  --tile-dark:      rgba(0, 0, 0, 0.0);
+
+  --wall-color:     #2a2d3a;
+  --wall-dark:      #1a1c26;
+
+  --radius-sm:      6px;
+  --radius-md:      12px;
+  --radius-lg:      20px;
+  --radius-pill:    999px;
+
+  --shadow-sm:      0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md:      0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-lg:      0 8px 40px rgba(0, 0, 0, 0.6);
+
+  --transition-fast:   0.15s ease;
+  --transition-normal: 0.25s ease;
+  --transition-slow:   0.4s ease;
+
+  --font-display:  'Anton', 'Oswald', impact, sans-serif;
+  --font-body:     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  --font-mono:     'Share Tech Mono', 'Courier New', monospace;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   APP WRAPPER
+   ============================================================ */
+#app {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   SCREENS
+   ============================================================ */
+.screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  animation: fadeSlideIn 0.4s ease both;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* ============================================================
+   TITLE SCREEN (#screen-title)
+   ============================================================ */
+#screen-title {
+  gap: 28px;
+  text-align: center;
+  padding: 24px 0 32px;
+}
+
+.title-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #1e2235, #2a2d3a);
+  border: 1px solid rgba(74, 158, 255, 0.25);
+  color: var(--accent-blue);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  animation: fadeSlideIn 0.5s ease both;
+}
+
+#screen-title h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 10vw, 5rem);
+  font-weight: 400; /* Anton is always bold by design */
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  text-shadow:
+    0 0 40px rgba(74, 158, 255, 0.3),
+    0 2px 0 rgba(0, 0, 0, 0.6);
+  animation: fadeSlideIn 0.5s 0.1s ease both;
+}
+
+#screen-title h1 span {
+  color: var(--accent-blue);
+}
+
+.title-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  letter-spacing: 0.02em;
+  max-width: 360px;
+  animation: fadeSlideIn 0.5s 0.2s ease both;
+}
+
+.title-icon {
+  font-size: 3.5rem;
+  animation: fadeSlideIn 0.5s 0.15s ease both, bounce 2s 1s ease-in-out infinite;
+  display: block;
+}
+
+#btn-start {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--accent-blue), #2176d2);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 16px 44px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 24px rgba(74, 158, 255, 0.35), 0 0 0 0 rgba(74, 158, 255, 0);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+  animation: fadeSlideIn 0.5s 0.3s ease both;
+  white-space: nowrap;
+}
+
+#btn-start:hover {
+  transform: scale(1.06) translateY(-2px);
+  box-shadow: 0 8px 32px rgba(74, 158, 255, 0.5), 0 0 0 4px rgba(74, 158, 255, 0.15);
+  background: linear-gradient(135deg, #5aaeff, var(--accent-blue));
+}
+
+#btn-start:active {
+  transform: scale(0.98) translateY(0);
+  box-shadow: 0 2px 12px rgba(74, 158, 255, 0.35);
+}
+
+.title-footer {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  animation: fadeSlideIn 0.5s 0.4s ease both;
+}
+
+/* ============================================================
+   GAME SCREEN (#screen-game)
+   ============================================================ */
+#screen-game {
+  gap: 20px;
+  padding: 8px 0 24px;
+}
+
+/* ============================================================
+   HUD
+   ============================================================ */
+#hud {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+#hud-level {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#hud-level-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+#hud-level-value {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--accent-blue);
+}
+
+#hud-score {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#hud-score-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+#hud-score-value {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  min-width: 3ch;
+  text-align: right;
+  transition: color var(--transition-fast);
+}
+
+#hud-score-value.bump {
+  color: var(--accent-green);
+  animation: scoreBump 0.4s ease;
+}
+
+/* ============================================================
+   SCENARIO INFO
+   ============================================================ */
+.scenario-info {
+  width: 100%;
+  text-align: center;
+  padding: 4px 8px;
+}
+
+#scenario-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+  margin-bottom: 4px;
+}
+
+#scenario-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   BATHROOM WRAPPER & FLOOR
+   ============================================================ */
+#bathroom-wrapper {
+  width: 100%;
+  position: relative;
+  background-color: #2c2f3e;
+  /* Tile floor: repeating-linear-gradient to simulate 40×40px floor tiles */
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255, 255, 255, 0.055) 39px,
+      rgba(255, 255, 255, 0.055) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(255, 255, 255, 0.055) 39px,
+      rgba(255, 255, 255, 0.055) 40px
+    );
+  background-size: 40px 40px;
+  border-radius: var(--radius-lg);
+  padding: 0 24px 28px;
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 0 60px rgba(0, 0, 0, 0.35),
+    inset 0 8px 30px rgba(0, 0, 0, 0.4);
+  border: 2px solid #1a1c26;
+  overflow: hidden;
+}
+
+/* Top wall — flush against ceiling, urinals mount to it */
+#bathroom-wrapper::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  background: linear-gradient(180deg, var(--wall-dark) 0%, var(--wall-color) 70%, #32364a 100%);
+  border-bottom: 3px solid #111420;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  z-index: 1;
+}
+
+/* Wall label */
+#bathroom-wrapper::after {
+  content: 'WALL';
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  color: rgba(255, 255, 255, 0.12);
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ============================================================
+   BATHROOM FLEX ROW
+   ============================================================ */
+#bathroom {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 18px;
+  padding-top: 44px; /* clears the wall pseudo-element */
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================================
+   URINAL
+   ============================================================ */
+.urinal {
+  position: relative;
+  width: 70px;
+  height: 90px;
+  background: linear-gradient(180deg, #e8e2d6 0%, var(--urinal-body) 40%, #ede8de 100%);
+  border: 3px solid var(--urinal-border);
+  /* U-shape / rounded rectangle wider at bottom — top-down view of porcelain */
+  border-radius: 4px 4px 50% 50% / 4px 4px 20px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.45),
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.7),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.12);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+  user-select: none;
+  /* Urinal flush-mount to wall: small connector tab at top */
+  margin-top: -6px;
+}
+
+/* Mounting flange — the small bit that attaches to the wall */
+.urinal::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 10px;
+  background: linear-gradient(180deg, #c5bfb5, #b8b2a8);
+  border-radius: 3px 3px 0 0;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-bottom: none;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Inner bowl */
+.urinal-bowl {
+  width: 38px;
+  height: 38px;
+  background: radial-gradient(circle at 45% 40%, #ddd5c4, var(--urinal-bowl) 50%, var(--urinal-drain) 100%);
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  box-shadow:
+    inset 0 2px 8px rgba(0, 0, 0, 0.25),
+    inset 0 1px 3px rgba(0, 0, 0, 0.15);
+  position: relative;
+  margin-top: 10px;
+  flex-shrink: 0;
+}
+
+/* Drain dot */
+.urinal-bowl::after {
+  content: '';
+  position: absolute;
+  bottom: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 7px;
+  height: 7px;
+  background: #9a9187;
+  border-radius: 50%;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- Hover state ---- */
+.urinal:hover:not(.occupied):not(.selected):not([class*="result-"]) {
+  transform: translateY(-3px) scale(1.03);
+  border-color: var(--accent-yellow);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.5),
+    0 0 16px rgba(241, 196, 15, 0.45),
+    inset 0 1px 2px rgba(255, 255, 255, 0.7);
+}
+
+/* ---- Occupied state ---- */
+.urinal.occupied {
+  cursor: not-allowed;
+  background: linear-gradient(180deg, #d8d3ca 0%, #cbc6bd 100%);
+  border-color: #aaa69e;
+  opacity: 0.88;
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.45),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.urinal.occupied:hover {
+  transform: none;
+  border-color: #aaa69e;
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.45),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+/* ---- Selected state ---- */
+.urinal.selected {
+  border-color: var(--accent-blue);
+  animation: pulse-glow-blue 1.5s ease-in-out infinite;
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* ---- Result states ---- */
+.urinal.result-perfect {
+  border-color: var(--accent-green);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(46, 204, 113, 0.6),
+    0 0 40px rgba(46, 204, 113, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.7);
+  cursor: default;
+}
+
+.urinal.result-good {
+  border-color: #8bc34a;
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    0 0 16px rgba(139, 195, 74, 0.55),
+    inset 0 1px 2px rgba(255, 255, 255, 0.7);
+  cursor: default;
+}
+
+.urinal.result-okay {
+  border-color: var(--accent-orange);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    0 0 16px rgba(230, 126, 34, 0.5),
+    inset 0 1px 2px rgba(255, 255, 255, 0.7);
+  cursor: default;
+}
+
+.urinal.result-wrong {
+  border-color: var(--accent-red);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(231, 76, 60, 0.6),
+    0 0 40px rgba(231, 76, 60, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.7);
+  cursor: default;
+}
+
+/* Celebration: perfect + selected */
+.urinal.result-perfect.selected {
+  animation: celebration 0.6s ease forwards, pulse-glow-green 1.5s 0.6s ease-in-out infinite;
+}
+
+/* ============================================================
+   PERSON ICON
+   ============================================================ */
+.person-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.person-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--accent-red);
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+}
+
+/* ============================================================
+   FEEDBACK AREA
+   ============================================================ */
+#feedback-area {
+  width: 100%;
+  background: rgba(31, 35, 51, 0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  animation: fadeSlideIn 0.35s ease both;
+}
+
+#feedback-area.hidden {
+  display: none;
+}
+
+#feedback-emoji {
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 8px;
+  display: block;
+}
+
+#feedback-msg {
+  font-size: 1rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+#feedback-detail {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   NEXT BUTTON
+   ============================================================ */
+#btn-next {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--accent-blue), #2176d2);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 15px 32px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  animation: fadeSlideIn 0.3s ease both;
+}
+
+#btn-next:hover {
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 0 8px 28px rgba(74, 158, 255, 0.45);
+}
+
+#btn-next:active {
+  transform: scale(0.97);
+}
+
+#btn-next.hidden {
+  display: none;
+}
+
+/* ============================================================
+   RESULTS SCREEN (#screen-results)
+   ============================================================ */
+#screen-results {
+  gap: 24px;
+  padding: 16px 0 32px;
+}
+
+.results-card {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.results-header-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+#result-score-display {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 18vw, 7rem);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--text-primary);
+  text-shadow: 0 0 40px rgba(74, 158, 255, 0.3);
+  margin-bottom: 4px;
+}
+
+.result-score-max {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+#result-rating {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  /* Color set via JS based on score — default gold */
+  color: var(--accent-gold);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.35);
+}
+
+#result-rating.rating-good    { color: var(--accent-green); text-shadow: 0 0 20px rgba(46, 204, 113, 0.35); }
+#result-rating.rating-okay    { color: var(--accent-yellow); text-shadow: 0 0 20px rgba(241, 196, 15, 0.35); }
+#result-rating.rating-bad     { color: var(--accent-orange); text-shadow: 0 0 20px rgba(230, 126, 34, 0.35); }
+#result-rating.rating-fail    { color: var(--accent-red); text-shadow: 0 0 20px rgba(231, 76, 60, 0.35); }
+
+#result-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.results-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  margin: 20px auto;
+}
+
+.results-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+#btn-restart {
+  flex: 1;
+  min-width: 140px;
+  max-width: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--accent-blue), #2176d2);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 24px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 16px rgba(74, 158, 255, 0.3);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+#btn-restart:hover {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 8px 24px rgba(74, 158, 255, 0.45);
+}
+
+#btn-restart:active {
+  transform: scale(0.97);
+}
+
+#btn-share {
+  flex: 1;
+  min-width: 140px;
+  max-width: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--accent-blue);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 13px 24px;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--accent-blue);
+  box-shadow: 0 0 0 rgba(74, 158, 255, 0);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+}
+
+#btn-share:hover {
+  background: rgba(74, 158, 255, 0.1);
+  box-shadow: 0 0 20px rgba(74, 158, 255, 0.2);
+  transform: scale(1.05) translateY(-2px);
+}
+
+#btn-share:active {
+  transform: scale(0.97);
+}
+
+/* ============================================================
+   TOAST NOTIFICATION
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  background: rgba(20, 22, 32, 0.95);
+  backdrop-filter: blur(10px);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  padding: 11px 22px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: var(--shadow-md);
+  white-space: nowrap;
+  z-index: 9999;
+  pointer-events: none;
+  animation: toastIn 0.3s ease forwards, toastOut 0.4s 2.2s ease forwards;
+}
+
+/* ============================================================
+   PROGRESS INDICATOR (optional pip row)
+   ============================================================ */
+.progress-pips {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+.pip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.pip.done {
+  background: var(--accent-green);
+  border-color: var(--accent-green);
+  box-shadow: 0 0 6px rgba(46, 204, 113, 0.5);
+}
+
+.pip.current {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 8px rgba(74, 158, 255, 0.6);
+  transform: scale(1.3);
+}
+
+.pip.wrong {
+  background: var(--accent-red);
+  border-color: var(--accent-red);
+  box-shadow: 0 0 6px rgba(231, 76, 60, 0.5);
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+.hidden {
+  display: none !important;
+}
+
+.text-center { text-align: center; }
+.text-muted   { color: var(--text-muted); }
+.mt-sm        { margin-top: 8px; }
+.mt-md        { margin-top: 16px; }
+.mt-lg        { margin-top: 24px; }
+
+/* ============================================================
+   ANIMATIONS / KEYFRAMES
+   ============================================================ */
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow:
+      0 3px 10px rgba(0, 0, 0, 0.45),
+      0 0 8px currentColor;
+  }
+  50% {
+    box-shadow:
+      0 3px 10px rgba(0, 0, 0, 0.45),
+      0 0 20px currentColor,
+      0 0 35px currentColor;
+  }
+}
+
+@keyframes pulse-glow-blue {
+  0%, 100% {
+    box-shadow:
+      0 4px 14px rgba(0, 0, 0, 0.5),
+      0 0 8px rgba(74, 158, 255, 0.6),
+      inset 0 1px 2px rgba(255, 255, 255, 0.7);
+  }
+  50% {
+    box-shadow:
+      0 4px 14px rgba(0, 0, 0, 0.5),
+      0 0 22px rgba(74, 158, 255, 0.8),
+      0 0 40px rgba(74, 158, 255, 0.3),
+      inset 0 1px 2px rgba(255, 255, 255, 0.7);
+  }
+}
+
+@keyframes pulse-glow-green {
+  0%, 100% {
+    box-shadow:
+      0 4px 14px rgba(0, 0, 0, 0.5),
+      0 0 10px rgba(46, 204, 113, 0.6),
+      inset 0 1px 2px rgba(255, 255, 255, 0.7);
+  }
+  50% {
+    box-shadow:
+      0 4px 14px rgba(0, 0, 0, 0.5),
+      0 0 24px rgba(46, 204, 113, 0.85),
+      0 0 45px rgba(46, 204, 113, 0.35),
+      inset 0 1px 2px rgba(255, 255, 255, 0.7);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes celebration {
+  0%   { transform: scale(1) rotate(0deg); }
+  25%  { transform: scale(1.12) rotate(-3deg); }
+  50%  { transform: scale(1.1) rotate(3deg); }
+  75%  { transform: scale(1.08) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes scoreBump {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes toastOut {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+/* ============================================================
+   SCROLLBAR STYLING
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* ============================================================
+   RESPONSIVE — MOBILE (≤ 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  #app {
+    padding: 10px;
+  }
+
+  #screen-title h1 {
+    font-size: 2.4rem;
+  }
+
+  .title-subtitle {
+    font-size: 0.88rem;
+  }
+
+  #btn-start {
+    font-size: 1.1rem;
+    padding: 14px 32px;
+  }
+
+  /* Smaller urinals on mobile */
+  .urinal {
+    width: 55px;
+    height: 75px;
+  }
+
+  .urinal::before {
+    width: 22px;
+    height: 8px;
+    top: -8px;
+  }
+
+  .urinal-bowl {
+    width: 30px;
+    height: 30px;
+    margin-top: 8px;
+  }
+
+  .urinal-bowl::after {
+    width: 5px;
+    height: 5px;
+    bottom: 5px;
+  }
+
+  #bathroom {
+    gap: 12px;
+    padding-top: 44px;
+  }
+
+  #bathroom-wrapper {
+    padding: 0 14px 22px;
+  }
+
+  .person-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  #scenario-name {
+    font-size: 1.05rem;
+  }
+
+  #scenario-desc {
+    font-size: 0.82rem;
+  }
+
+  #feedback-area {
+    padding: 16px 18px;
+  }
+
+  #feedback-emoji {
+    font-size: 2.4rem;
+  }
+
+  #feedback-msg {
+    font-size: 0.92rem;
+  }
+
+  .results-card {
+    padding: 24px 18px;
+  }
+
+  #result-score-display {
+    font-size: 4.5rem;
+  }
+
+  #result-rating {
+    font-size: 1.5rem;
+  }
+
+  .results-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #btn-restart,
+  #btn-share {
+    width: 100%;
+    max-width: none;
+  }
+
+  #btn-next {
+    font-size: 1.05rem;
+    padding: 13px 24px;
+  }
+
+  .toast {
+    bottom: 20px;
+    font-size: 0.82rem;
+    padding: 9px 18px;
+    white-space: normal;
+    max-width: calc(100vw - 32px);
+    text-align: center;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — LARGE SCREENS (≥ 640px)
+   ============================================================ */
+@media (min-width: 640px) {
+  #bathroom-wrapper {
+    padding: 0 32px 36px;
+  }
+
+  #bathroom {
+    gap: 22px;
+  }
+
+  .urinal {
+    width: 76px;
+    height: 96px;
+  }
+
+  .urinal-bowl {
+    width: 42px;
+    height: 42px;
+  }
+}

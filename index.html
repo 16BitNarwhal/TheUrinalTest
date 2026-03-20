@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Urinal Test — How well do you know The Code?">
+  <meta property="og:title" content="The Urinal Test">
+  <meta property="og:description" content="The Urinal Test — How well do you know The Code?">
+  <meta name="theme-color" content="#0f1117">
+  <title>The Urinal Test</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="levels.js"></script>
+  <script src="game.js"></script>
+</head>
+<body>
+  <div id="app">
+
+    <!-- SCREEN 1: Title -->
+    <div id="screen-title" class="screen active">
+      <div class="title-logo">🚽</div>
+      <h1 class="title-text">THE URINAL TEST</h1>
+      <p class="subtitle">How well do you know The Code?</p>
+      <div id="best-score-display"></div>
+      <button id="btn-start">Take The Test</button>
+      <p class="disclaimer">⚠️ No actual urinals were harmed in the making of this game</p>
+    </div>
+
+    <!-- SCREEN 2: Game -->
+    <div id="screen-game" class="screen">
+      <div id="hud">
+        <span id="level-label">Level 1 / 10</span>
+        <span id="score-label">Score: 0</span>
+      </div>
+      <div id="scenario-name"></div>
+      <div id="scenario-desc"></div>
+      <div id="bathroom-wrapper">
+        <div id="bathroom">
+          <!-- urinals injected by game.js -->
+        </div>
+      </div>
+      <div id="feedback-area" class="hidden">
+        <div id="feedback-emoji"></div>
+        <div id="feedback-msg"></div>
+      </div>
+      <button id="btn-next" class="hidden">Next Level →</button>
+    </div>
+
+    <!-- SCREEN 3: Results -->
+    <div id="screen-results" class="screen">
+      <div id="results-inner">
+        <h2>Test Complete!</h2>
+        <div id="result-score-display"></div>
+        <div id="result-rating"></div>
+        <div id="result-description"></div>
+        <div class="result-buttons">
+          <button id="btn-restart">Try Again</button>
+          <button id="btn-share">Share Result</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast hidden"></div>
+
+  </div>
+
+  <script>initGame();</script>
+</body>
+</html>
